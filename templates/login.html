@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SecureVote</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h1>🔐 Secure Login</h1>
+                <p>Multi-factor authentication for your security</p>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label>Voter ID</label>
+                    <input type="text" id="voterId" required placeholder="Enter your voter ID">
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required placeholder="Enter your password">
+                </div>
+                
+                <div class="form-group">
+                    <label>OTP (sent to your phone)</label>
+                    <input type="text" id="otp" placeholder="Enter 6-digit OTP">
+                    <button type="button" class="btn-link" onclick="requestOTP()">Request OTP</button>
+                </div>
+                
+                <div class="form-group">
+                    <label>Biometric Authentication (Optional)</label>
+                    <button type="button" class="btn-secondary" onclick="scanBiometric()">
+                        👆 Scan Fingerprint
+                    </button>
+                </div>
+                
+                <button type="submit" class="btn-primary btn-full">Login</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="/register">Register here</a></p>
+                <p><a href="/">Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/auth.js"></script>
+</body>
+</html>

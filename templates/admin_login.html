@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - SecureVote</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h1>🔐 Admin Login</h1>
+                <p>Secure admin access with multi-factor authentication</p>
+            </div>
+            
+            <form id="adminLoginForm" class="auth-form">
+                <div class="form-group">
+                    <label>Admin Username</label>
+                    <input type="text" id="username" required placeholder="Enter admin username">
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required placeholder="Enter password">
+                </div>
+                
+                <div class="form-group">
+                    <label>MFA Code</label>
+                    <input type="text" id="mfaCode" required placeholder="Enter 6-digit MFA code" maxlength="6">
+                </div>
+                
+                <button type="submit" class="btn-primary btn-full">Login as Admin</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p><a href="/">Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/auth.js"></script>
+</body>
+</html>

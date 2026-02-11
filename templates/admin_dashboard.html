@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SecureVote</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body class="admin-body">
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>🔐 Admin Panel</h2>
+                <p id="adminUsername"></p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+                    <span>📊</span> Dashboard
+                </a>
+                <a href="#election" class="nav-item" onclick="showSection('election')">
+                    <span>🗳️</span> Manage Election
+                </a>
+                <a href="#voters" class="nav-item" onclick="showSection('voters')">
+                    <span>👥</span> Voters
+                </a>
+                <a href="#admins" class="nav-item" onclick="showSection('admins')">
+                    <span>⚙️</span> Admin Management
+                </a>
+                <a href="#security" class="nav-item" onclick="showSection('security')">
+                    <span>🛡️</span> Security Logs
+                </a>
+                <a href="#results" class="nav-item" onclick="showSection('results')">
+                    <span>📈</span> Results
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="/logout" class="btn-secondary btn-full">Logout</a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="admin-section active">
+                <h1>Dashboard Overview</h1>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <div class="stat-label">Total Voters</div>
+                            <div class="stat-value" id="totalVoters">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <div class="stat-label">Votes Cast</div>
+                            <div class="stat-value" id="votesCast">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-info">
+                            <div class="stat-label">Pending Approval</div>
+                            <div class="stat-value" id="pendingVoters">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <div class="stat-label">Turnout</div>
+                            <div class="stat-value" id="turnoutRate">0%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3>Election Status</h3>
+                        <div id="electionStatus">
+                            <p class="status-inactive">No active election</p>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-card">
+                        <h3>Blockchain Stats</h3>
+                        <div id="blockchainStats"></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Election Management Section -->
+            <section id="election-section" class="admin-section">
+                <h1>Manage Election</h1>
+                
+                <div class="admin-card">
+                    <h3>Election Configuration</h3>
+                    
+                    <form id="electionForm" class="admin-form">
+                        <div class="form-group">
+                            <label>Election Name</label>
+                            <input type="text" id="electionName" placeholder="General Election 2026" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>End Date & Time</label>
+                                <input type="datetime-local" id="electionEndTime" required>
+                                <small id="countdownLockWarning" style="color: #f59e0b; display: none;">
+                                    ⚠️ Countdown locked after election starts!
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Candidates</label>
+                            <div id="candidatesList">
+                                <div class="candidate-input">
+                                    <input type="text" placeholder="Candidate Name" class="candidate-name">
+                                    <input type="text" placeholder="Party" class="candidate-party">
+                                    <button type="button" onclick="removeCandidateInput(this)" class="btn-danger-small">Remove</button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addCandidateInput()" class="btn-secondary">+ Add Candidate</button>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" onclick="startElection()" class="btn-primary">
+                                Start Election
+                            </button>
+                            <button type="button" onclick="stopElection()" class="btn-danger">
+                                Stop Election
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            
+            <!-- Voters Management Section -->
+            <section id="voters-section" class="admin-section">
+                <h1>Voter Management</h1>
+                
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h3>Registered Voters</h3>
+                        <input type="text" id="voterSearch" placeholder="Search voters..." class="search-input">
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Voter ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Voted</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="votersTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Admin Management Section -->
+            <section id="admins-section" class="admin-section">
+                <h1>Admin Management</h1>
+                
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3>Promote Voter to Admin</h3>
+                        
+                        <form id="promoteAdminForm" class="admin-form">
+                            <div class="form-group">
+                                <label>Select Voter</label>
+                                <select id="voterToPromote" required>
+                                    <option value="">Choose a voter...</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Admin Username</label>
+                                <input type="text" id="newAdminUsername" placeholder="admin_username" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Admin Password</label>
+                                <input type="password" id="newAdminPassword" placeholder="Auto-generated if empty">
+                            </div>
+                            
+                            <button type="submit" class="btn-primary btn-full">
+                                Promote to Admin
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="admin-card">
+                        <h3>Current Admins</h3>
+                        <div id="adminsList" class="admins-list"></div>
+                    </div>
+                </div>
+                
+                <div id="promoteSuccessModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <h2>✅ Admin Created Successfully!</h2>
+                        <div class="credentials-box">
+                            <p><strong>Username:</strong> <span id="newAdminUser"></span></p>
+                            <p><strong>Password:</strong> <span id="newAdminPass"></span></p>
+                            <p><strong>MFA Code:</strong> <span id="newAdminMFA"></span></p>
+                        </div>
+                        <p class="warning">⚠️ Save these credentials! They won't be shown again.</p>
+                        <button onclick="closePromoteModal()" class="btn-primary">Got it!</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Security Logs Section -->
+            <section id="security-section" class="admin-section">
+                <h1>Security & Audit Logs</h1>
+                
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h3>Recent Activity</h3>
+                        <button onclick="refreshLogs()" class="btn-secondary">Refresh</button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="securityLogsBody">
+                                <tr>
+                                    <td colspan="5" class="text-center">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Results Section -->
+            <section id="results-section" class="admin-section">
+                <h1>Election Results</h1>
+                
+                <div class="admin-card">
+                    <h3>Live Results</h3>
+                    <div id="liveResults"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/admin.js"></script>
+</body>
+</html>

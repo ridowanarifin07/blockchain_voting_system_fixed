@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Explorer - SecureVote</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container" style="padding: 60px 20px;">
+        <div class="section-header">
+            <h1 class="section-title">⛓️ Blockchain Explorer</h1>
+            <p class="section-description">Transparent, immutable voting records</p>
+        </div>
+        
+        <div id="blockchainContainer" style="margin-top: 48px;">
+            <!-- Blocks will be loaded here dynamically -->
+        </div>
+        
+        <div style="text-align: center; margin-top: 32px;">
+            <a href="/" class="btn-primary">Return Home</a>
+        </div>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+    <script>
+        // Load blockchain on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            window.SecureVote.loadBlockchain();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cast Your Vote - SecureVote</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/voting.css">
+</head>
+<body>
+    <div class="voting-container">
+        <div class="voting-header">
+            <h1>🗳️ Cast Your Vote</h1>
+            <p>{{ election_name }}</p>
+            <div class="election-timer" id="electionTimer"></div>
+        </div>
+        
+        <div class="candidates-grid">
+            {% for candidate in candidates %}
+            <div class="candidate-card" data-candidate-id="{{ candidate.id }}">
+                <div class="candidate-photo">
+                    <img src="{{ candidate.photo }}" alt="{{ candidate.name }}">
+                </div>
+                <div class="candidate-info">
+                    <h3>{{ candidate.name }}</h3>
+                    <p class="candidate-party">{{ candidate.party }}</p>
+                    <p class="candidate-bio">{{ candidate.bio }}</p>
+                </div>
+                <button class="btn-vote" onclick="selectCandidate('{{ candidate.id }}')">
+                    Select
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="vote-confirmation" id="confirmationModal" style="display: none;">
+            <div class="modal-content">
+                <h2>Confirm Your Vote</h2>
+                <p>You have selected: <strong id="selectedCandidateName"></strong></p>
+                <p class="warning">⚠️ This action cannot be undone. Your vote will be encrypted and recorded on the blockchain.</p>
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="cancelVote()">Cancel</button>
+                    <button class="btn-primary" onclick="confirmVote()">Confirm & Cast Vote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/voting.js"></script>
+</body>
+</html>

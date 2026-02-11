@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureVote - Blockchain Voting System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="landing-page">
+    <div class="grain-overlay"></div>
+    
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="8" fill="currentColor" opacity="0.1"/>
+                        <path d="M20 10L28 16V24L20 30L12 24V16L20 10Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="20" cy="20" r="3" fill="currentColor"/>
+                    </svg>
+                    <span>SecureVote</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="/blockchain-explorer">Explorer</a></li>
+                    <li><a href="/results">Results</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="/login" class="btn-secondary">Login</a>
+                    <a href="/register" class="btn-primary">Register</a>
+                    <a href="/admin/login" class="btn-admin">Admin</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <circle cx="8" cy="8" r="3" fill="currentColor"/>
+                    </svg>
+                    <span>Powered by Blockchain Technology</span>
+                </div>
+                <h1 class="hero-title">
+                    The Future of<br>
+                    <span class="gradient-text">Democratic Voting</span>
+                </h1>
+                <p class="hero-description">
+                    Experience secure, transparent, and tamper-proof elections with our advanced blockchain-based voting system. Every vote counts, every vote is verified.
+                </p>
+                <div class="hero-actions">
+                    <a href="/register" class="btn-primary btn-large">
+                        Get Started
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                    <a href="#how-it-works" class="btn-secondary btn-large">Learn More</a>
+                </div>
+                
+                <!-- Stats -->
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">{{ election_config.get('total_votes', '0') }}</div>
+                        <div class="stat-label">Votes Cast</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Secure</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-value">∞</div>
+                        <div class="stat-label">Transparent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Election Status -->
+    {% if election_config.is_active %}
+    <section class="election-status active">
+        <div class="container">
+            <div class="status-banner">
+                <div class="status-indicator"></div>
+                <div class="status-content">
+                    <h3>🗳️ Election in Progress: {{ election_config.election_name }}</h3>
+                    <p>Cast your vote now. Election ends: {{ election_config.end_time }}</p>
+                </div>
+                <a href="/voting" class="btn-primary">Vote Now</a>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advanced Security Features</h2>
+                <p class="section-description">Built with cutting-edge technology to ensure election integrity</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card" style="--delay: 0.1s">
+                    <div class="feature-icon">🔐</div>
+                    <h3>End-to-End Encryption</h3>
+                    <p>All votes are encrypted using AES-256 and RSA algorithms, ensuring complete privacy and security.</p>
+                </div>
+                
+                <div class="feature-card" style="--delay: 0.2s">
+                    <div class="feature-icon">⛓️</div>
+                    <h3>Blockchain Verified</h3>
+                    <p>Every vote is recorded on an immutable blockchain ledger, making tampering impossible.</p>
+                </div>
+                
+                <div class="feature-card" style="--delay: 0.3s">
+                    <div class="feature-icon">👤</div>
+                    <h3>Multi-Factor Auth</h3>
+                    <p>Biometric verification, OTP, and digital signatures ensure only eligible voters participate.</p>
+                </div>
+                
+                <div class="feature-card" style="--delay: 0.4s">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-Time Analytics</h3>
+                    <p>Live election results with comprehensive data visualization and demographic insights.</p>
+                </div>
+                
+                <div class="feature-card" style="--delay: 0.5s">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>DDoS Protection</h3>
+                    <p>Advanced security measures protect against attacks and ensure system availability.</p>
+                </div>
+                
+                <div class="feature-card" style="--delay: 0.6s">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Fraud Detection</h3>
+                    <p>Machine learning algorithms continuously monitor for suspicious activities and fraud.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-description">Simple, secure, and transparent voting process</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Register & Verify</h3>
+                        <p>Create your account with national ID verification and biometric registration.</p>
+                    </div>
+                </div>
+                
+                <div class="step-connector"></div>
+                
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Authenticate</h3>
+                        <p>Login with multi-factor authentication including OTP and biometric verification.</p>
+                    </div>
+                </div>
+                
+                <div class="step-connector"></div>
+                
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Cast Vote</h3>
+                        <p>Select your candidate and securely submit your encrypted vote to the blockchain.</p>
+                    </div>
+                </div>
+                
+                <div class="step-connector"></div>
+                
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Verify</h3>
+                        <p>Receive confirmation and verify your vote on the public blockchain ledger.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Highlights -->
+    <section class="security-section">
+        <div class="container">
+            <div class="security-content">
+                <div class="security-text">
+                    <h2>Military-Grade Security</h2>
+                    <p>Our voting system implements the highest standards of cryptographic security, ensuring your vote remains private while maintaining complete transparency in the electoral process.</p>
+                    <ul class="security-features">
+                        <li>✓ SHA-256 Blockchain Hashing</li>
+                        <li>✓ AES-256 Vote Encryption</li>
+                        <li>✓ RSA Digital Signatures</li>
+                        <li>✓ Distributed Ledger Technology</li>
+                        <li>✓ GDPR Compliant</li>
+                        <li>✓ Real-time Audit Trails</li>
+                    </ul>
+                </div>
+                <div class="security-visual">
+                    <div class="blockchain-visual">
+                        <div class="block">Block N-1</div>
+                        <div class="arrow">→</div>
+                        <div class="block active">Block N</div>
+                        <div class="arrow">→</div>
+                        <div class="block">Block N+1</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="8" fill="currentColor" opacity="0.1"/>
+                            <path d="M20 10L28 16V24L20 30L12 24V16L20 10Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="20" cy="20" r="3" fill="currentColor"/>
+                        </svg>
+                        <span>SecureVote</span>
+                    </div>
+                    <p>Revolutionizing democracy with blockchain technology</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Platform</h4>
+                        <ul>
+                            <li><a href="/voting">Vote</a></li>
+                            <li><a href="/blockchain-explorer">Blockchain Explorer</a></li>
+                            <li><a href="/results">Results</a></li>
+                            <li><a href="/analytics">Analytics</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">API</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Compliance</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">GDPR Compliance</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 SecureVote. All rights reserved.</p>
+                <div class="footer-socials">
+                    <a href="#">Twitter</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

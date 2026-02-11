@@ -368,3 +368,4 @@ For issues or questions:
 ---
 
 **Built with ❤️ using Python, Flask, and Blockchain Technology**
+https://ridowanarifin07.github.io/blockchain_voting_system_fixed/
